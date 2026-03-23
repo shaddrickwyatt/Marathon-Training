@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marathon Training Plan — Phase 1</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f2;color:#1a1a18;padding:2rem 1rem}
+.container{max-width:960px;margin:0 auto}
+h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.subtitle{font-size:14px;color:#5f5e5a;margin-bottom:2rem}
+:root{
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f1efe8;
+  --color-background-info:#e6f1fb;
+  --color-text-primary:#1a1a18;
+  --color-text-secondary:#5f5e5a;
+  --color-text-info:#185fa5;
+  --color-border-tertiary:rgba(0,0,0,0.12);
+  --color-border-secondary:rgba(0,0,0,0.22);
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --color-background-primary:#2c2c2a;
+    --color-background-secondary:#444441;
+    --color-background-info:#0c447c;
+    --color-text-primary:#f1efe8;
+    --color-text-secondary:#b4b2a9;
+    --color-text-info:#85b7eb;
+    --color-border-tertiary:rgba(255,255,255,0.12);
+    --color-border-secondary:rgba(255,255,255,0.22);
+  }
+  body{background:#1a1a18;color:#f1efe8}
+}
+.wk-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
+.wk-btn{padding:5px 11px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;cursor:pointer;background:transparent;color:var(--color-text-secondary)}
+.wk-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent;font-weight:500}
+.wk-btn.deload{border-color:#9FE1CB;color:#0F6E56}
+.wk-btn.deload.active{background:#E1F5EE;color:#085041}
+.day-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+@media(max-width:600px){.day-grid{grid-template-columns:1fr}}
+.day-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px}
+.day-card.full{grid-column:1/-1}
+.day-card.rest-card{background:var(--color-background-secondary)}
+.dc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.dc-day{font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--color-text-secondary)}
+.dc-tag{font-size:11px;padding:2px 9px;border-radius:20px}
+.tag-run{background:var(--color-background-info);color:var(--color-text-info)}
+.tag-str{background:#EEEDFE;color:#3C3489}
+.tag-rest{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.dc-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+.dc-meta{font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;line-height:1.5}
+.sec-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin:10px 0 5px;border-top:0.5px solid var(--color-border-tertiary);padding-top:8px}
+.sec-label.first{border-top:none;padding-top:0;margin-top:0}
+.ex-table{width:100%;border-collapse:collapse}
+.ex-table th{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:left;padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.ex-table td{font-size:12px;color:var(--color-text-primary);padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top}
+.ex-table tr:last-child td{border-bottom:none}
+.ex-name{font-weight:500}
+.ex-note{font-size:11px;color:var(--color-text-secondary);line-height:1.4;margin-top:1px}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:20px;font-weight:500}
+.pill-sets{background:#EEEDFE;color:#3C3489}
+.pill-back{background:#FAEEDA;color:#633806}
+.pill-dur{background:var(--color-background-info);color:var(--color-text-info)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px}
+.stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
+.stat-val{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.deload-banner{background:#E1F5EE;border:0.5px solid #9FE1CB;border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:#085041;margin-bottom:1rem}
+.pace-note{font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 12px;margin-bottom:1.25rem;line-height:1.6}
+.wk-label-row{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Marathon Training Plan — Phase 1</h1>
+  <p class="subtitle">Base building · Weeks 1–12 · Beginner · 6'2" 219 lb · 35 min 5K baseline</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-label">Current 5K pace</div><div class="stat-val">11:15/mi</div></div>
+    <div class="stat"><div class="stat-label">Easy run pace</div><div class="stat-val">13:00–13:45/mi</div></div>
+    <div class="stat"><div class="stat-label">Long run pace</div><div class="stat-val">13:30–14:15/mi</div></div>
+  </div>
+  <div class="pace-note">Easy pace feels almost too slow — you should be able to speak full sentences comfortably. At 219 lbs and 6'2", keeping runs easy protects your joints while your connective tissue adapts. Speed comes later.</div>
+
+  <div class="wk-label-row">Select week — <span style="color:#0F6E56">green = deload week</span></div>
+  <div class="wk-row" id="wk-row"></div>
+  <div id="plan-content"></div>
+</div>
+
+<script>
+const weeks=[
+  {run:[20,22,28],deload:false},
+  {run:[22,24,32],deload:false},
+  {run:[24,26,36],deload:false},
+  {run:[18,18,26],deload:true},
+  {run:[26,28,40],deload:false},
+  {run:[28,30,44],deload:false},
+  {run:[30,32,48],deload:false},
+  {run:[22,22,34],deload:true},
+  {run:[32,34,52],deload:false},
+  {run:[34,36,56],deload:false},
+  {run:[36,38,62],deload:false},
+  {run:[26,26,44],deload:true},
+];
+
+const workoutA={
+  lower:[
+    {name:"Goblet Squat",sets:"3 × 12",note:"Hold a dumbbell at chest. Feet shoulder-width, toes slightly out. Sit deep, chest tall."},
+    {name:"Romanian Deadlift",sets:"3 × 10",note:"Dumbbells or barbell. Hinge at hips, soft knees. Feel hamstring stretch, drive hips forward to stand."},
+    {name:"Glute Bridge",sets:"3 × 15",note:"Feet flat, squeeze glutes hard at the top. Hold 1 sec. Progress to single-leg when easy."},
+  ],
+  back:[
+    {name:"Dumbbell Row",sets:"3 × 12 / side",note:"Brace on a bench, pull elbow back toward hip. Full range — let the shoulder blade retract and depress fully."},
+    {name:"Face Pull (band or cable)",sets:"3 × 15",note:"Pull toward forehead with elbows flared high. Critical for posture — counteracts the forward lean of running. Light resistance only."},
+    {name:"Superman Hold",sets:"3 × 10",note:"Lie face down, raise arms and legs off floor simultaneously. Hold 3 sec each rep. Strengthens the entire posterior chain along the spine."},
+  ],
+  core:[
+    {name:"Dead Bug",sets:"3 × 8 / side",note:"Lie on back, arms and legs up. Lower opposite arm+leg slowly without letting your lower back arch off the floor."},
+    {name:"Push-up",sets:"3 × 10",note:"Rigid plank position, elbows ~45° out. Incline on a bench if needed. Back stays flat — no sagging hips."},
+  ]
+};
+
+const workoutB={
+  lower:[
+    {name:"Reverse Lunge",sets:"3 × 10 / leg",note:"Step back, lower knee toward floor. Keep front shin vertical. Add dumbbells when bodyweight feels easy."},
+    {name:"Single-leg RDL",sets:"3 × 8 / leg",note:"Balance on one leg, hinge forward with soft knee. Hold dumbbell in opposite hand. Excellent for runner hip stability."},
+    {name:"Side-lying Hip Abduction",sets:"3 × 15 / side",note:"Lie on side, raise top leg to 45°. Slow and controlled. Targets the glute med — a key injury-prevention muscle for runners."},
+  ],
+  back:[
+    {name:"Lat Pulldown or Resistance Band Pulldown",sets:"3 × 12",note:"Grip just outside shoulder-width, pull bar to upper chest. Squeeze lats at the bottom. Builds the V-taper and improves running arm carriage."},
+    {name:"Seated Cable Row or Band Row",sets:"3 × 12",note:"Sit tall, pull handles to lower ribs, drive elbows back. Keep chest up — don't round the lower back on the return."},
+    {name:"Prone Y-T-W Raise",sets:"2 × 10 each",note:"Lie face down, raise arms into Y, T, then W shapes with bodyweight or very light plates. Targets mid and lower traps — critical for upright running posture."},
+  ],
+  core:[
+    {name:"Side Plank",sets:"3 × 30 sec / side",note:"Hips stacked and high. Modify by dropping the bottom knee. Build toward 45 sec over Phase 1."},
+    {name:"Bird Dog",sets:"3 × 10 / side",note:"On all fours, extend opposite arm and leg. Hold 2 sec. Don't let hips rotate — keep them square."},
+  ]
+};
+
+function exSection(label,exs,pillClass,isFirst){
+  return`<div class="sec-label${isFirst?' first':''}">${label}</div>
+  <table class="ex-table">
+    <tr><th style="width:40%">Exercise</th><th style="width:22%">Volume</th><th>Notes</th></tr>
+    ${exs.map(e=>`<tr>
+      <td><div class="ex-name">${e.name}</div></td>
+      <td><span class="pill ${pillClass}">${e.sets}</span></td>
+      <td><div class="ex-note">${e.note}</div></td>
+    </tr>`).join('')}
+  </table>`;
+}
+
+function render(i){
+  const w=weeks[i];
+  const [tue,thu,sat]=w.run;
+  const totalMins=tue+thu+sat;
+  const approxMiles=Math.round((totalMins/13.5)*10)/10;
+
+  document.getElementById('plan-content').innerHTML=`
+    ${w.deload?`<div class="deload-banner">Deload week — volume drops ~30%. Your body is adapting. Don't add extra work to fill the gap.</div>`:''}
+    <div class="stat-row">
+      <div class="stat"><div class="stat-label">Total run time</div><div class="stat-val">${totalMins} min</div></div>
+      <div class="stat"><div class="stat-label">Est. run mileage</div><div class="stat-val">~${approxMiles} mi</div></div>
+      <div class="stat"><div class="stat-label">Strength sessions</div><div class="stat-val">2 days</div></div>
+    </div>
+
+    <div class="day-grid">
+
+      <div class="day-card">
+        <div class="dc-header"><span class="dc-day">Monday</span><span class="dc-tag tag-str">Strength A</span></div>
+        <div class="dc-title">Full body — Workout A</div>
+        <div class="dc-meta">~55–65 min · Rest 90 sec between sets · Keep weights light enough that the last rep is a 6/10 effort</div>
+        ${exSection("Lower body",workoutA.lower,"pill-sets",true)}
+        ${exSection("Back",workoutA.back,"pill-back",false)}
+        ${exSection("Core & push",workoutA.core,"pill-sets",false)}
+      </div>
+
+      <div class="day-card">
+        <div class="dc-header"><span class="dc-day">Tuesday</span><span class="dc-tag tag-run">Easy run</span></div>
+        <div class="dc-title">Easy run — <span class="pill pill-dur">${tue} min</span></div>
+        <div class="dc-meta">Pace: 13:00–13:45/mi · Talk-test the whole time. If you can't, slow down — no exceptions.</div>
+        <table class="ex-table">
+          <tr><th>Segment</th><th>Duration</th><th>Notes</th></tr>
+          <tr><td>Walk warm-up</td><td>3 min</td><td class="ex-note">Brisk walk to elevate heart rate gently</td></tr>
+          <tr><td>Easy run</td><td>${tue-5} min</td><td class="ex-note">Flat route preferred, conversational pace</td></tr>
+          <tr><td>Walk cool-down</td><td>2 min</td><td class="ex-note">Let heart rate settle naturally</td></tr>
+        </table>
+      </div>
+
+      <div class="day-card">
+        <div class="dc-header"><span class="dc-day">Wednesday</span><span class="dc-tag tag-str">Strength B</span></div>
+        <div class="dc-title">Full body — Workout B</div>
+        <div class="dc-meta">~55–65 min · Heavy lat and row emphasis. Good back training = better running posture over 26.2 miles.</div>
+        ${exSection("Lower body",workoutB.lower,"pill-sets",true)}
+        ${exSection("Back",workoutB.back,"pill-back",false)}
+        ${exSection("Core",workoutB.core,"pill-sets",false)}
+      </div>
+
+      <div class="day-card">
+        <div class="dc-header"><span class="dc-day">Thursday</span><span class="dc-tag tag-run">Easy run</span></div>
+        <div class="dc-title">Easy run — <span class="pill pill-dur">${thu} min</span></div>
+        <div class="dc-meta">Same pace as Tuesday. If legs are heavy from Wednesday's session, go even slower — that's fine and expected.</div>
+        <table class="ex-table">
+          <tr><th>Segment</th><th>Duration</th><th>Notes</th></tr>
+          <tr><td>Walk warm-up</td><td>3 min</td><td class="ex-note">Loosen up legs from Wed strength session</td></tr>
+          <tr><td>Easy run</td><td>${thu-5} min</td><td class="ex-note">Flat or very gentle terrain. No hills yet.</td></tr>
+          <tr><td>Walk cool-down</td><td>2 min</td><td class="ex-note">5 min calf + hip flexor stretch after</td></tr>
+        </table>
+      </div>
+
+      <div class="day-card rest-card">
+        <div class="dc-header"><span class="dc-day">Friday</span><span class="dc-tag tag-rest">Rest</span></div>
+        <div class="dc-title">Full rest day</div>
+        <div class="dc-meta">No strenuous activity. Optional: 10 min foam rolling (upper back, lats, glutes) or light stretching. Sleep 8+ hrs tonight — it's your pre-long-run recovery window.</div>
+      </div>
+
+      <div class="day-card">
+        <div class="dc-header"><span class="dc-day">Saturday</span><span class="dc-tag tag-run">Long run</span></div>
+        <div class="dc-title">Long run — <span class="pill pill-dur">${sat} min</span></div>
+        <div class="dc-meta">Pace: 13:30–14:15/mi · Slower than your weekday runs. Bring water if over 40 min. Walk breaks are allowed and encouraged.</div>
+        <table class="ex-table">
+          <tr><th>Segment</th><th>Duration</th><th>Notes</th></tr>
+          <tr><td>Walk warm-up</td><td>5 min</td><td class="ex-note">Longer warm-up — body needs more time on long days</td></tr>
+          <tr><td>Easy run</td><td>${sat-10} min</td><td class="ex-note">If you need a 1-min walk break, take it. Goal is time on feet.</td></tr>
+          <tr><td>Walk cool-down</td><td>5 min</td><td class="ex-note">Finish with 10 min stretching: calves, hip flexors, quads, lats</td></tr>
+        </table>
+      </div>
+
+      <div class="day-card rest-card full">
+        <div class="dc-header"><span class="dc-day">Sunday</span><span class="dc-tag tag-rest">Rest</span></div>
+        <div class="dc-title">Full rest day</div>
+        <div class="dc-meta">Complete rest. Optional 15 min gentle yoga or foam rolling the upper back and thoracic spine. Eat well — aim for 180–200g protein and plenty of carbs to reload for the week ahead.</div>
+      </div>
+
+    </div>
+  `;
+}
+
+const row=document.getElementById('wk-row');
+weeks.forEach((_,i)=>{
+  const b=document.createElement('button');
+  b.className='wk-btn'+(weeks[i].deload?' deload':'')+(i===0?' active':'');
+  b.textContent=`Week ${i+1}`;
+  b.onclick=()=>{
+    document.querySelectorAll('.wk-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    render(i);
+  };
+  row.appendChild(b);
+});
+render(0);
+</script>
+</body>
+</html>
